@@ -18,14 +18,13 @@
                           Offset="1" />
         </LinearGradientBrush>
     </Window.Background>
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <ContentControl Name="ContentDisplay" Grid.Row="0" />
+        <ContentControl Name="ContentDisplay"
+                        Grid.Row="0" />
         <!--Search Bar-->
         <StackPanel Grid.Row="1">
             <TextBox Name="SearchBox"
