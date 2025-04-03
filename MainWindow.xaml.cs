@@ -79,5 +79,13 @@ namespace TVshows
                 return null;
             }
         }
+
+        private void SearchByEnter(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                SearchButton_Click(sender, e);
+            }
+        }
     }
 }
