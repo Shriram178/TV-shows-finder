@@ -1,0 +1,49 @@
+﻿<Window x:Class="TVshows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TVshows"
+        xmlns:usercontols="clr-namespace:TVshows.UserContols"
+        mc:Ignorable="d"
+        Title="Show Finder"
+        Height="820"
+        Width="500">
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0"
+                             EndPoint="1,1">
+            <GradientStop Color="LightBlue"
+                          Offset="0" />
+            <GradientStop Color="LightGreen"
+                          Offset="1" />
+        </LinearGradientBrush>
+    </Window.Background>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <ContentControl Name="ContentDisplay" Grid.Row="0" />
+        <!--Search Bar-->
+        <StackPanel Grid.Row="1">
+            <TextBox Name="SearchBox"
+                     Width="200"
+                     Margin="10" />
+            <Button Click="SearchButton_Click"
+                    Width="100"
+                    Margin="10">
+                <StackPanel Orientation="Horizontal">
+                    <Image Margin="5"
+                           Source="./Images/search.png"
+                           Width="20"
+                           Height="20" />
+                    <TextBlock Text="Search"
+                               VerticalAlignment="Center"
+                               Margin="5" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
