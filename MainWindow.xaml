@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="Show Finder"
         Height="820"
-        Width="500">
+        Width="500"
+        ResizeMode="NoResize">
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0"
                              EndPoint="1,1">

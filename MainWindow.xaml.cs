@@ -1,7 +1,10 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using HtmlAgilityPack;
 using TVshows.Model;
 using TVshows.UserContols;
 
@@ -24,6 +27,13 @@ namespace TVshows
             ContentDisplay.Content = staticPrompt;
         }
 
+        private string ParseHtml(string html)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            return HtmlEntity.DeEntitize(doc.DocumentNode.InnerText);
+        }
+
         private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             string query = SearchBox.Text;
@@ -35,11 +45,16 @@ namespace TVshows
                     ShowDetailsControl showDetails = new ShowDetailsControl();
                     showDetails.ShowImage.Source = new BitmapImage(new Uri(show.ImageURL));
                     showDetails.ShowName.Text = show.Name;
-                    showDetails.ShowDescription.Text = show.Description;
+
+                    //showDetails.ShowDescription.Text = show.Description;
+                    string parsedData = ParseHtml(show.Description);
+                    AnimateText(showDetails.ShowDescription, parsedData);
                     showDetails.ShowRating.Text = $"Rating: {show.Rating}";
                     showDetails.ShowType.Text = $"Type: {show.Type}";
                     showDetails.ShowStatus.Text = $"Status: {show.Status}";
                     ContentDisplay.Content = showDetails;
+
+                    AnimateBounce(showDetails);
                 }
                 else
                 {
@@ -79,6 +94,11 @@ namespace TVshows
                 return null;
             }
         }
+        private void AnimateBounce(ShowDetailsControl showDetails)
+        {
+            var bounceAnimation = (Storyboard)showDetails.FindResource("BounceAnimation");
+            bounceAnimation.Begin();
+        }
 
         private void SearchByEnter(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -86,6 +106,28 @@ namespace TVshows
             {
                 SearchButton_Click(sender, e);
             }
+        }
+
+        private void AnimateText(TextBlock textBlock, string text)
+        {
+            textBlock.Text = string.Empty;
+            var storyboard = new Storyboard();
+            var keyFrames = new StringAnimationUsingKeyFrames();
+
+            for (int i = 0; i <= text.Length; i++)
+            {
+                var keyFrame = new DiscreteStringKeyFrame
+                {
+                    KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(i * 10)),
+                    Value = text.Substring(0, i)
+                };
+                keyFrames.KeyFrames.Add(keyFrame);
+            }
+
+            Storyboard.SetTarget(keyFrames, textBlock);
+            Storyboard.SetTargetProperty(keyFrames, new PropertyPath(TextBlock.TextProperty));
+            storyboard.Children.Add(keyFrames);
+            storyboard.Begin();
         }
     }
 }

@@ -7,15 +7,35 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
+    <UserControl.Resources>
+        <Storyboard x:Key="BounceAnimation">
+            <DoubleAnimation Storyboard.TargetName="ShowImage"
+                             Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                             From="-200"
+                             To="0"
+                             Duration="0:0:1">
+                <DoubleAnimation.EasingFunction>
+                    <BounceEase Bounces="3"
+                                Bounciness="2"
+                                EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
+    
     <ScrollViewer>
-        
+         
     <StackPanel HorizontalAlignment="Center">
-        <Image Name="ShowImage"
-               Width="100"
-               Height="150"
-               Margin="5"
-               HorizontalAlignment="Center" />
-        <TextBlock Name="ShowName"
+            <Image Name="ShowImage"
+                   Width="100"
+                   Height="150"
+                   Margin="5"
+                   HorizontalAlignment="Center">
+                <Image.RenderTransform>
+                    <TranslateTransform />
+                </Image.RenderTransform>
+            </Image>
+            <TextBlock Name="ShowName"
                    FontSize="20"
                    FontWeight="Bold"
                    Margin="5"
